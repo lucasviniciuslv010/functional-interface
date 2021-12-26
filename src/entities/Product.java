@@ -76,6 +76,14 @@ public class Product implements Serializable {
 	public static int myStaticComparatorMethod(Product p1, Product p2) {
 		return p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
 	}
+	
+	public boolean myPredicateMethod() {
+		return this.getPrice() < 1500.0;
+	}
+	
+	public static boolean myStaticPredicateMethod(Product product) {
+		return product.getPrice() < 1500.0;
+	}
 
 	@Override
 	public String toString() {

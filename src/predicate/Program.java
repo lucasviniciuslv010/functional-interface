@@ -1,13 +1,13 @@
-package comparator;
+package predicate;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
 
-import comparator.method.MyComparatorMethods;
-import comparator.object.MyComparatorClass;
 import entities.Product;
+import predicate.method.MyPredicateMethods;
+import predicate.object.MyPredicateClass;
 
 public class Program {
 
@@ -26,7 +26,7 @@ public class Program {
 		
 		
 		/* SEPARATE CLASS OBJECT */
-		products.sort(new MyComparatorClass());
+		products.removeIf(new MyPredicateClass());
 		
 		
 		
@@ -35,16 +35,16 @@ public class Program {
 		
 		
 		/* ANONYMOUS CLASS OBJECT */
-		Comparator<Product> comparator = new Comparator<>() {
-			
+		Predicate<Product> predicate = new Predicate<>() {
+
 			@Override
-			public int compare(Product p1, Product p2) {
-				return p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
+			public boolean test(Product product) {
+				return product.getPrice() < 1500.0;
 			}
 			
 		};
 		
-		products.sort(comparator);
+		products.removeIf(predicate);
 		
 		
 		
@@ -53,11 +53,11 @@ public class Program {
 		
 		
 		/* LAMBDA EXPRESSION OBJECT WITH THE KEYS */
-		Comparator<Product> comparator2 = (p1, p2) -> {
-			return p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
+		Predicate<Product> predicate2 = product -> {
+			return product.getPrice() < 1500.0;
 		};
 		
-		products.sort(comparator2);
+		products.removeIf(predicate2);
 		
 		
 		
@@ -66,9 +66,9 @@ public class Program {
 		
 		
 		/* LAMBDA EXPRESSION OBJECT WITHOUT THE KEYS */
-		Comparator<Product> comparator3 = (p1, p2) -> p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
-	
-		products.sort(comparator3);
+		Predicate<Product> predicate3 = product -> product.getPrice() < 1500;
+		
+		products.removeIf(predicate3);
 		
 		
 		
@@ -78,7 +78,7 @@ public class Program {
 		
 		//******
 		/* LAMBDA EXPRESSION IN THE ARGUMENT */
-		products.sort((p1, p2) -> p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase()));
+		products.removeIf(product -> product.getPrice() < 1500);
 		//******
 		
 		
@@ -88,7 +88,7 @@ public class Program {
 		
 		
 		/* INSTANCE METHOD REFERENCE */
-		products.sort(Product::myComparatorMethod);
+		products.removeIf(Product::myPredicateMethod);
 		
 		
 		
@@ -97,8 +97,7 @@ public class Program {
 		
 		
 		/* STATIC METHOD REFERENCE */
-		products.sort(Product::myStaticComparatorMethod);
-		
+		products.removeIf(Product::myStaticPredicateMethod);
 		
 		
 		//###########################################################
@@ -106,17 +105,16 @@ public class Program {
 		
 		
 		/* INSTANCE METHOD REFERENCE - SEPARATE CLASS OBJECT */
-		products.sort(new MyComparatorMethods()::myComparatorMethod);
+		products.removeIf(new MyPredicateMethods()::myPredicateMethod);
 		
 		
-		
+	
 		//###########################################################
 		
 		
 		
 		/* STATIC METHOD REFERENCE - SEPARATE CLASS OBJECT */
-		products.sort(MyComparatorMethods::myStaticComparatorMethod);
-		
+		products.removeIf(MyPredicateMethods::myStaticPredicateMethod);
 		
 	}
 	
